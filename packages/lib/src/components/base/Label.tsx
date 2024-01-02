@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/system";
+import { styled } from "@mui/system";
 import React, { ReactElement, ReactNode } from "react";
 import Tooltip from "./Tooltip";
 

@@ -1,7 +1,6 @@
 import { ClickAwayListener, Tooltip as MuiTooltip } from "@mui/material";
 import { CSSProperties, ReactElement, ReactNode, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { textOverflow } from "../../styles";
 
 interface Props extends React.HTMLAttributes<HTMLElement> {
   childrenStyles?: CSSProperties;
