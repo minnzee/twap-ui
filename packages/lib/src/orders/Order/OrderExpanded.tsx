@@ -1,7 +1,7 @@
 import { styled } from "@mui/material";
 import { Status } from "@orbs-network/twap";
 import { ReactNode } from "react";
-import { Button, Label, TokenLogo, TokenPriceCompare, Tooltip } from "../../components/base";
+import { Button, Label, TokenPriceCompare, Tooltip } from "../../components/base";
 import { useTwapContext } from "../../context";
 import { useCancelOrder, useFormatNumber, useHistoryPrice } from "../../hooks";
 import { fillDelayText, useTwapStore } from "../../store";
@@ -12,41 +12,42 @@ const OrderExpanded = ({ order }: { order: OrderUI }) => {
   const translations = useTwapContext().translations;
   const minimumDelayMinutes = useTwapStore((state) => state.getMinimumDelayMinutes());
   const totalChunks = useFormatNumber({ value: order.ui.totalChunks });
-  const srcChunkAmountUsdUi = useFormatNumber({ value: order.ui.srcChunkAmountUsdUi });
-  const srcChunkAmountUsdUiTooltip = useFormatNumber({ value: order.ui.srcChunkAmountUsdUi, decimalScale: 18 });
+  // const srcChunkAmountUsdUi = useFormatNumber({ value: order.ui.srcChunkAmountUsdUi });
+  // const srcChunkAmountUsdUiTooltip = useFormatNumber({ value: order.ui.srcChunkAmountUsdUi, decimalScale: 18 });
 
   const srcChunkAmountUi = useFormatNumber({ value: order.ui.srcChunkAmountUi });
   const srcChunkAmountUiTootlip = useFormatNumber({ value: order.ui.srcChunkAmountUi, decimalScale: 18 });
 
   const dstMinAmountOutUi = useFormatNumber({ value: order.ui.dstMinAmountOutUi });
-  const dstMinAmountOutUsdUi = useFormatNumber({ value: order.ui.dstMinAmountOutUsdUi });
-  const dstMinAmountOutUsdUiTooltip = useFormatNumber({ value: order.ui.dstMinAmountOutUsdUi, decimalScale: 18 });
+  // const dstMinAmountOutUsdUi = useFormatNumber({ value: order.ui.dstMinAmountOutUsdUi });
+  // const dstMinAmountOutUsdUiTooltip = useFormatNumber({ value: order.ui.dstMinAmountOutUsdUi, decimalScale: 18 });
 
   return (
     <StyledContainer className="twap-order-expanded">
       <StyledColumnFlex gap={0}>
-        {order.ui.srcToken && order.ui.dstToken && <OrderPrice order={order} />}
+        
         <StyledColumnFlex className="twap-extended-order-info">
+        {order.ui.srcToken && order.ui.dstToken && <OrderPrice order={order} />}
           <Row label={`${translations.totalTrades}`} tooltip={translations.totalTradesTooltip}>
             {totalChunks}
           </Row>
           <Row label={`${translations.tradeSize}`} tooltip={translations.tradeSizeTooltip}>
-            <TokenLogo logo={order.ui.srcToken.logoUrl} />
+            {/* <TokenLogo logo={order.ui.srcToken.logoUrl} /> */}
             <Tooltip text={`${srcChunkAmountUiTootlip} ${order.ui.srcToken.symbol}`}>
               {srcChunkAmountUi} {order.ui.srcToken?.symbol}
             </Tooltip>
-            <Tooltip text={`$ ${srcChunkAmountUsdUiTooltip}`}> ≈ $ {srcChunkAmountUsdUi}</Tooltip>
+            {/* <Tooltip text={`$ ${srcChunkAmountUsdUiTooltip}`}> ≈ $ {srcChunkAmountUsdUi}</Tooltip> */}
           </Row>
           {order.ui.isMarketOrder ? (
             <Row label={`${translations.minReceivedPerTrade}`} tooltip={translations.confirmationMinDstAmountTootipMarket}>
-              <TokenLogo logo={order.ui.dstToken.logoUrl} />
+              {/* <TokenLogo logo={order.ui.dstToken.logoUrl} /> */}
               {translations.none} {order.ui.dstToken?.symbol}
             </Row>
           ) : (
             <Row label={`${translations.minReceivedPerTrade}`} tooltip={translations.confirmationMinDstAmountTootipLimit}>
-              <TokenLogo logo={order.ui.dstToken.logoUrl} />
+              {/* <TokenLogo logo={order.ui.dstToken.logoUrl} /> */}
               {dstMinAmountOutUi}
-              {order.ui.dstToken?.symbol} ≈ $ <Tooltip text={dstMinAmountOutUsdUiTooltip}>{dstMinAmountOutUsdUi}</Tooltip>
+              {/* {order.ui.dstToken?.symbol} ≈ $ <Tooltip text={dstMinAmountOutUsdUiTooltip}>{dstMinAmountOutUsdUi}</Tooltip> */}
             </Row>
           )}
 
@@ -107,9 +108,9 @@ export const StyledDetailRow = styled(StyledRowFlex)({
     fontWeight: 300,
   },
   "@media(max-width: 500px)": {
-    flexDirection: "column",
+    // flexDirection: "column",
     alignItems: "flex-start",
-    gap: 5,
+    // gap: 5,
   },
 });
 
@@ -143,9 +144,18 @@ export const CancelOrderButton = ({ orderId, className = "" }: { orderId: number
 
 const StyledMarketPrice = styled(StyledRowFlex)({
   "@media(max-width: 500px)": {
-    flexDirection: "column",
-    alignItems: "flex-start",
-    gap: 5,
+    // flexDirection: "column",
+    // alignItems: "flex-start",
+    // gap: 5,
+    ".twap-token-logo": {
+      display: 'none'
+    },
+    ".twap-price-compare > span": {
+      display: "inline !important",
+    },
+    "button": {
+      display: "none"
+    },
   },
 });
 

@@ -32,7 +32,7 @@ const uiPreferences: TwapContextUIPreferences = {
   infoIcon: BsQuestionCircle,
   switchVariant: "ios",
   usdSuffix: " USD",
-  usdPrefix: "≈ ",
+  usdPrefix: "",
 };
 
 const storeOverride = {

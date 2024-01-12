@@ -1,4 +1,4 @@
-import { Button, ClickAwayListener } from "@mui/material";
+import {  ClickAwayListener } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { useState } from "react";
 import { useTwapContext } from "../../context";
@@ -7,6 +7,7 @@ import { StyledText } from "../../styles";
 import { Translations } from "../../types";
 import NumericInput from "./NumericInput";
 import { IoIosArrowDown } from "@react-icons/all-files/io/IoIosArrowDown";
+import { RoundButton } from "../../../../../../../styledComponents";
 
 const timeArr: { text: keyof Translations; value: TimeResolution }[] = [
   {
@@ -65,10 +66,10 @@ function TimeSelector({ value, onChange, disabled = false, className = "", onFoc
       </StyledInput>
 
       <StyledTimeSelect>
-        <StyledSelected onClick={onOpenListClick} className="twap-time-selector-selected">
+        <RoundButton onClick={onOpenListClick} className="twap-time-selector-selected">
           <StyledText> {translations[findSelectedResolutionText(value.resolution)]}</StyledText>
           <IoIosArrowDown />
-        </StyledSelected>
+        </RoundButton>
         {showList && (
           <ClickAwayListener onClickAway={() => setShowList(false)}>
             <StyledList className="twap-time-selector-list">
@@ -148,11 +149,11 @@ const StyledListItem = styled(Box)({
   },
 });
 
-const StyledSelected = styled(Button)({
-  cursor: "pointer",
-  gap: 5,
-  svg: {
-    width: 14,
-    height: 14,
-  },
-});
+// const StyledSelected = styled(Button)({
+//   cursor: "pointer",
+//   gap: 5,
+//   svg: {
+//     width: 14,
+//     height: 14,
+//   },
+// });

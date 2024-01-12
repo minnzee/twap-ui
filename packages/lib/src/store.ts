@@ -148,9 +148,9 @@ export const useTwapStore = create(
         return translation.selectTokens;
       }
 
-      // if (valuesValidation === OrderInputValidation.invalidSmallestSrcChunkUsd) {
-      //   return translation.tradeSizeMustBeEqual;
-      // }
+      if (valuesValidation === OrderInputValidation.invalidSmallestSrcChunkUsd) {
+        return translation.tradeSizeMustBeEqual;
+      }
       if ((get() as any).getFillDelayWarning()) {
         return translation.fillDelayWarning;
       }

@@ -96,7 +96,7 @@ interface OrderTokenDisplayProps {
   isLoading?: boolean;
   isMain?: boolean;
 }
-export const OrderTokenDisplay = ({ token, amount, prefix = "", className = "", usdValue, alighLeft, usdPrefix, icon, isLoading }: OrderTokenDisplayProps) => {
+export const OrderTokenDisplay = ({ token, amount, className = "", usdValue, alighLeft,  icon, isLoading }: OrderTokenDisplayProps) => {
   const tokenAmount = useFormatNumber({ value: amount });
   const tokenAmountTooltip = useFormatNumber({ value: amount, decimalScale: 18 });
 
@@ -108,7 +108,6 @@ export const OrderTokenDisplay = ({ token, amount, prefix = "", className = "", 
           {amount ? (
             <Tooltip text={`${tokenAmountTooltip} ${token?.symbol}`}>
               <Typography className="twap-order-token-display-amount">
-                {prefix ? `${prefix} ` : ""}
                 {tokenAmount}
                 {` ${token?.symbol}`}
               </Typography>
@@ -117,11 +116,11 @@ export const OrderTokenDisplay = ({ token, amount, prefix = "", className = "", 
             <Typography>{` ${token?.symbol}`}</Typography>
           )}
 
-          {!alighLeft && <OrderUsdValue isLoading={isLoading} usdValue={usdValue} prefix={usdPrefix} />}
+          {!alighLeft && <OrderUsdValue isLoading={isLoading} usdValue={usdValue}  />}
         </StyledTokenDisplayAmount>
         {icon && <StyledIcon>{icon}</StyledIcon>}
       </StyledTokenDisplayFlex>
-      {alighLeft && <OrderUsdValue isLoading={isLoading} usdValue={usdValue} prefix={usdPrefix} />}
+      {alighLeft && <OrderUsdValue isLoading={isLoading} usdValue={usdValue} />}
     </StyledTokenDisplay>
   );
 };
@@ -129,6 +128,7 @@ export const OrderTokenDisplay = ({ token, amount, prefix = "", className = "", 
 const StyledIcon = styled("div")({
   position: "relative",
   top: 2,
+  right: -12,
   svg: {
     width: 20,
     height: 20,
@@ -141,7 +141,7 @@ interface OrderUsdValueProps {
   isLoading?: boolean;
 }
 
-export function OrderUsdValue({ usdValue, prefix = "≈", isLoading }: OrderUsdValueProps) {
+export function OrderUsdValue({ usdValue, isLoading }: OrderUsdValueProps) {
   const formattedValue = useFormatNumber({ value: usdValue });
   const formattedValueTooltip = useFormatNumber({ value: usdValue, decimalScale: 18 });
 
@@ -151,7 +151,7 @@ export function OrderUsdValue({ usdValue, prefix = "≈", isLoading }: OrderUsdV
   return (
     <StyledTokenDisplayUsd loading={false} className="twap-order-token-display-usd">
       <Tooltip text={`$ ${formattedValueTooltip}`}>
-        {prefix} $ {formattedValue}
+        ${formattedValue}
       </Tooltip>
     </StyledTokenDisplayUsd>
   );

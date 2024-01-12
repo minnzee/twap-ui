@@ -74,6 +74,7 @@ const StyledModal = styled(MuiModal)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  zIndex: 9
 });
 
 const StyledModalContent = styled(Box)({

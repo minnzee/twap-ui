@@ -111,7 +111,7 @@ export const StyledOrdersTabs = styled(Tabs)({
   },
   "& .MuiTouchRipple-root": {},
   "& .MuiButtonBase-root": {
-    zIndex: 9,
+    zIndex: 2,
   },
   "& .Mui-selected": {},
 });

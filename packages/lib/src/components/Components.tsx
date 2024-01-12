@@ -18,7 +18,7 @@ import {
   Modal,
   Radio,
 } from "./base";
-import { styled, Button as MuiButton } from "@mui/material";
+import { styled, Button as MuiButton, Checkbox } from "@mui/material";
 import { useTwapContext } from "../context";
 import { AiOutlineWarning } from "@react-icons/all-files/ai/AiOutlineWarning";
 import { RiArrowUpDownLine } from "@react-icons/all-files/ri/RiArrowUpDownLine";
@@ -118,11 +118,11 @@ export const TokenInput = ({ isSrc, placeholder, className = "" }: { isSrc?: boo
     <NumericInput
       className={`${className} twap-token-input`}
       decimalScale={isSrc ? srcDecimals : dstDecimals}
-      prefix={isSrc ? "" : isLimitOrder ? "≥" : SQUIGLE}
+      prefix={!"" || isSrc ? "" : isLimitOrder ? "≥" : SQUIGLE}
       loading={isSrc ? srcInputLoading : dstInputLoading}
       disabled={!isSrc}
       placeholder={placeholder}
-      onChange={isSrc ? setSrcAmountUi : () => {}}
+      onChange={isSrc ? setSrcAmountUi : () => { }}
       value={isSrc ? srcAmount : dstAmount}
     />
   );
@@ -295,7 +295,13 @@ export function ChunksUSD({ onlyValue, emptyUi, suffix, prefix }: { onlyValue?: 
   const usd = useTwapStore((state) => state.getSrcChunkAmountUsdUi());
   const loading = useLoadingState().srcUsdLoading;
 
-  return <USD prefix={prefix} suffix={suffix} value={usd} onlyValue={onlyValue} emptyUi={emptyUi} isLoading={loading} />;
+  return <>
+    <StyledRowFlex gap={7} style={{ width: 'auto' }}>
+      <TokenLogo isSrc={true} />
+      <TradeSizeValue />
+      <USD prefix={prefix} suffix={suffix} value={usd} onlyValue={onlyValue} emptyUi={emptyUi} isLoading={loading} />
+    </StyledRowFlex>
+  </>
 }
 
 export const TokenBalance = ({
@@ -373,7 +379,7 @@ export const SubmitButton = ({ className = "", isMain }: { className?: string; i
   const { loading, onClick, disabled, text } = useSubmitButton(isMain);
 
   return (
-    <Button className={`twap-submit ${className}`} loading={loading} onClick={onClick || (() => {})} disabled={disabled}>
+    <Button className={`twap-submit ${className}`} loading={loading} onClick={onClick || (() => { })} disabled={disabled}>
       {text}
     </Button>
   );
@@ -425,14 +431,19 @@ export function LimitPriceInput({
   if (!components) return null;
   return (
     <StyledLimitPriceInput className={`twap-limit-price-input ${className}`}>
-      <StyledRowFlex gap={10} style={{ paddingLeft: 5 }} width="fit-content">
-        {components.leftToken}
-        <StyledText>=</StyledText>
+      <StyledRowFlex width="fit-content">
+        <StyledRowFlex gap={5} style={{ paddingLeft: 5 }} width="fit-content">
+          {components.leftToken}
+          <StyledText>=</StyledText>
+        </StyledRowFlex>
+        {components.input}
+        <StyledRowFlex width="fit-content">
+          {components.rightToken}
+        </StyledRowFlex>
       </StyledRowFlex>
-      {components.input}
+
 
       <StyledRowFlex gap={10} width="fit-content">
-        {components.rightToken}
         {components.toggle}
       </StyledRowFlex>
     </StyledLimitPriceInput>
@@ -635,6 +646,7 @@ export const OrderSummaryDetailsDeadline = ({ subtitle }: { subtitle?: boolean }
 };
 
 export const OrderSummaryDetails = ({ className = "", subtitle }: { className?: string; subtitle?: boolean }) => {
+  const isLimitOrder = useTwapStore((store) => store.isLimitOrder);
   return (
     <StyledSummaryDetails className={`twap-order-summary-details ${className}`}>
       <OrderSummaryDetailsDeadline subtitle={subtitle} />
@@ -642,7 +654,7 @@ export const OrderSummaryDetails = ({ className = "", subtitle }: { className?: 
       <OrderSummaryDetailsChunkSize subtitle={subtitle} />
       <OrderSummaryDetailsTotalChunks subtitle={subtitle} />
       <OrderSummaryDetailsTradeInterval subtitle={subtitle} />
-      <OrderSummaryDetailsMinDstAmount subtitle={subtitle} />
+      {isLimitOrder && <OrderSummaryDetailsMinDstAmount subtitle={subtitle} />}
     </StyledSummaryDetails>
   );
 };
@@ -674,7 +686,8 @@ export const OrderSummaryTokenDisplay = ({ isSrc, usdSuffix, usdPrefix }: { isSr
   const dstAmount = useTwapStore((store) => store.getDstAmountUi());
 
   const amount = isSrc ? srcAmount : dstAmount;
-  const prefix = isSrc ? "" : isLimitOrder ? "≥ " : "~ ";
+  let prefix = isSrc ? "" : isLimitOrder ? "≥ " : "~ ";
+  prefix = ""
 
   return (
     <StyledOrderSummaryTokenDisplay className="twap-orders-summary-token-display">
@@ -700,9 +713,11 @@ export const AcceptDisclaimer = ({ variant, className }: { variant?: SwitchVaria
   const disclaimerAccepted = useTwapStore((store) => store.disclaimerAccepted);
 
   return (
-    <StyledRowFlex gap={5} justifyContent="space-between" className={`twap-disclaimer-switch ${className}`}>
-      <Label>{translations.acceptDisclaimer}</Label>
+    <StyledRowFlex gap={5} className={`twap-disclaimer-switch ${className}`}>
       <Switch variant={variant} value={disclaimerAccepted} onChange={() => setDisclaimerAccepted(!disclaimerAccepted)} />
+      <Checkbox value={disclaimerAccepted} onChange={() => setDisclaimerAccepted(!disclaimerAccepted)} />
+      <Label>{translations.acceptDisclaimer}</Label>
+
     </StyledRowFlex>
   );
 };
@@ -927,7 +942,7 @@ export const TradeSizeValue = ({ symbol }: { symbol?: boolean }) => {
   );
 };
 
-export const TradeSize = ({ hideLabel, hideSymbol }: { hideLabel?: boolean; hideSymbol?: boolean }) => {
+export const TradeSize = ({ hideLabel }: { hideLabel?: boolean; }) => {
   const srcToken = useTwapStore((store) => store.srcToken);
   const dsToken = useTwapStore((store) => store.dstToken);
 
@@ -941,10 +956,6 @@ export const TradeSize = ({ hideLabel, hideSymbol }: { hideLabel?: boolean; hide
   return (
     <StyledTradeSize>
       {!hideLabel && <ChunksAmountLabel />}
-      <StyledRowFlex gap={7} className="content">
-        <TokenLogo isSrc={true} />
-        <TradeSizeValue symbol={!hideSymbol} />
-      </StyledRowFlex>
     </StyledTradeSize>
   );
 };

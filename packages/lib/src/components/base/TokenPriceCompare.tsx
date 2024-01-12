@@ -40,9 +40,10 @@ function TokenPriceCompare({ leftToken, rightToken, price, className, toggleInve
     );
   }
   return (
-    <StyledContainer className={`twap-price-compare ${className}`}>
+    <StyledContainer className={`twap-price-compare ${className}`} onClick={_toggleInverted}>
       <LeftToken token={leftToken} />
-      <IconButton onClick={_toggleInverted}>{<Icon icon={<HiSwitchHorizontal />} />}</IconButton>
+      <IconButton onClick={()=>{}}>{<Icon icon={<HiSwitchHorizontal />} />}</IconButton>
+      <span style={{display: 'none'}}>=</span>
       <RightToken price={price} token={rightToken} />
     </StyledContainer>
   );

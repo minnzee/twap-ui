@@ -2,7 +2,7 @@ const handleSwitchStyles = ({ thumb, thumbActive, track, trackActive }: { thumb?
   return {
     ".twap-switch": {
       "& .MuiSwitch-thumb": {
-        background: thumb,
+        background: thumb+'80',
       },
       "& .MuiSwitch-track": {
         background: `${track}!important`,
