@@ -709,6 +709,7 @@ export const useOrderPastEvents = (order: OrderUI, enabled?: boolean) => {
 export const useFormatNumber = ({ value, decimalScale = 3, prefix, suffix }: { value?: string | number; decimalScale?: number; prefix?: string; suffix?: string }) => {
   const result = useNumericFormat({
     allowLeadingZeros: true,
+    valueIsNumericString: false,
     thousandSeparator: ",",
     displayType: "text",
     value: value || "",

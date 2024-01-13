@@ -1,3 +1,4 @@
+import { WalletRounded } from "@mui/icons-material";
 import { styled } from "@mui/system";
 import React, { ReactNode } from "react";
 import { useTwapContext } from "../../context";
@@ -17,8 +18,8 @@ interface Props {
   symbol: string;
 }
 
-function Balance({ isLoading, value, className = "", label, suffix, hideLabel, emptyUi, decimalScale }: Props) {
-  const { translations, uiPreferences } = useTwapContext();
+function Balance({ isLoading, value, className = "",  suffix, emptyUi, decimalScale }: Props) {
+  const { uiPreferences } = useTwapContext();
 
   const _emptyUi = emptyUi || uiPreferences.balanceEmptyUI;
 
@@ -34,7 +35,10 @@ function Balance({ isLoading, value, className = "", label, suffix, hideLabel, e
   return (
     <Tooltip text={formattedValueTooltip} placement="bottom">
       <StyledLabel loading={isLoading} className={`twap-balance ${className}`}>
-        {hideLabel ? null : label ? <span className="twap-balance-title">{label}</span> : <span className="twap-balance-title">{translations.balance}:</span>}{" "}
+        <WalletRounded sx={{
+          fontSize: '15px',
+          // color: themeOptions.info,
+        }} /> {" "}
         {!value && _emptyUi ? _emptyUi : <>{formattedValue}</>}
       </StyledLabel>
     </Tooltip>
@@ -46,4 +50,11 @@ export default Balance;
 const StyledLabel = styled(SmallLabel)({
   overflow: "hidden",
   minWidth: 0,
+  "p": {
+    display: "flex",
+    alignItems: "center"
+  },
+  "svg": {
+    marginRight: "0.5rem"
+  }
 });
