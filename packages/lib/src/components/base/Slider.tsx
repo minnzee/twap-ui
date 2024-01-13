@@ -34,7 +34,7 @@ const Slider = ({ onChange, value, maxTrades, className = "" }: Props) => {
       getAriaValueText={valueLabelFormat}
       valueLabelFormat={valueLabelFormat}
       onChange={handleChange}
-      valueLabelDisplay="auto"
+      valueLabelDisplay="off"
       className={`twap-slider ${className}`}
     />
   );
