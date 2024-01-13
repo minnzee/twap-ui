@@ -582,7 +582,6 @@ export const useOrdersHistoryQuery = (_priceUsd?: (token: TokenData) => Promise<
       retry: 5,
     }
   );
-  console.log('query', query)
   return { ...query, orders: query.data || {}, isLoading: query.isLoading && query.fetchStatus !== "idle" };
 };
 
