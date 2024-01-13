@@ -343,6 +343,7 @@ export const TokenBalance = ({
       label={label}
       value={balance}
       isLoading={isLoading}
+      isSrc={isSrc}
     />
   );
 };

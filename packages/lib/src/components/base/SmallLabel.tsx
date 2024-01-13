@@ -3,9 +3,9 @@ import { CSSProperties, ReactNode } from "react";
 import { StyledOneLineText } from "../../styles";
 import Loader from "./Loader";
 
-function SmallLabel({ children, style, loading = false, className = "" }: { children?: string | ReactNode; style?: CSSProperties; loading?: boolean; className?: string }) {
+function SmallLabel({ children, style, loading = false, className = "", onClick }: { children?: string | ReactNode; style?: CSSProperties; loading?: boolean; className?: string; onClick?: () => void }) {
   return (
-    <StyledContainer style={style} className={`twap-small-label ${className}`}>
+    <StyledContainer onClick={onClick} style={style} className={`twap-small-label ${className}`}>
       {loading && (
         <Fade in={loading}>
           <StyledLoader className="twap-small-label-loader">
