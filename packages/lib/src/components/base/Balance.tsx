@@ -1,4 +1,4 @@
-import { WalletRounded } from "@mui/icons-material";
+import { AccountBalanceWalletRounded } from "@mui/icons-material";
 import { styled } from "@mui/system";
 import React, { ReactNode } from "react";
 import { useTwapContext } from "../../context";
@@ -35,7 +35,7 @@ function Balance({ isLoading, value, className = "",  suffix, emptyUi, decimalSc
   return (
     <Tooltip text={formattedValueTooltip} placement="bottom">
       <StyledLabel loading={isLoading} className={`twap-balance ${className}`}>
-        <WalletRounded sx={{
+        <AccountBalanceWalletRounded sx={{
           fontSize: '15px',
           // color: themeOptions.info,
         }} /> {" "}

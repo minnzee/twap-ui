@@ -330,7 +330,8 @@ export const TokenBalance = ({
   const balance = isSrc ? srcBalance : dstBalance;
   const isLoading = isSrc ? srcLoading : dstLoading;
   const symbol = isSrc ? srcToken?.symbol : dstToken?.symbol;
-  const suffix = !showSymbol ? undefined : isSrc ? srcToken?.symbol : dstToken?.symbol;
+  let suffix = !showSymbol ? undefined : isSrc ? srcToken?.symbol : dstToken?.symbol;
+  if (!suffix) suffix = isSrc ? srcToken?.symbol : dstToken?.symbol;
   return (
     <Balance
       symbol={symbol || ""}
